@@ -1,4 +1,9 @@
+// utils
+@import './utils/variables';
+@import './utils/mixins';
+// common
 @import './common/common';
 @import './common/container';
 @import './common/reset';
-@import './utils/mixins';
+// components
+@import './components/header';
