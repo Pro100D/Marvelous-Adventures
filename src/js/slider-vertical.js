@@ -7,12 +7,14 @@ new Swiper('.mySwiper', {
     el: '.swiper-pagination',
     clickable: true,
   },
-  autoplay: {
-    delay: 3000,
-  },
+  // autoplay: {
+  //   delay: 3000,
+  // },
   breakpoints: {
     767.98: {
       direction: 'vertical',
     },
   },
+  effect: 'cube',
+  speed: 750,
 });
