@@ -1,7 +1,7 @@
 import Swiper from 'swiper';
 import { Autoplay } from 'swiper/swiper-bundle.mjs';
 
-new Swiper('.mySwiper', {
+new Swiper('.swiper', {
   direction: 'horizontal',
   pagination: {
     el: '.swiper-pagination',
@@ -11,7 +11,7 @@ new Swiper('.mySwiper', {
   //   delay: 5000,
   // },
   breakpoints: {
-    767.98: {
+    1399.8: {
       direction: 'vertical',
     },
   },
@@ -24,7 +24,6 @@ new Swiper('.mySwiper', {
       const activeBullet = document.querySelector(
         '.swiper-pagination-bullet-active'
       );
-      const bullets = document.querySelector('.swiper-pagination-bullet');
 
       switch (this.activeIndex) {
         case 0:
