@@ -1,15 +1,15 @@
 import Swiper from 'swiper';
 import { Autoplay } from 'swiper/swiper-bundle.mjs';
 
-new Swiper('.swiper', {
+new Swiper('.hero-swiper', {
   direction: 'horizontal',
   pagination: {
     el: '.swiper-pagination',
     clickable: true,
   },
-  // autoplay: {
-  //   delay: 5000,
-  // },
+  autoplay: {
+    delay: 5000,
+  },
   breakpoints: {
     1399.8: {
       direction: 'vertical',

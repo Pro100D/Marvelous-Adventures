@@ -13,6 +13,7 @@
     height: 740px;
   }
 }
+
 .swiper-wrapper .swiper-slide {
   @include tablet {
     display: flex;
@@ -20,6 +21,7 @@
     align-items: flex-end;
   }
 }
+
 .mySlide {
   background-color: inherit;
 }
@@ -145,11 +147,23 @@
 #myPagination {
   position: static;
   margin-top: 40px;
+  @include desktop {
+    position: absolute;
+    transform: rotate(90deg);
+    display: flex;
+    gap: 20px;
+    right: 600px;
+    top: 400px;
+  }
 }
 
 .swiper-pagination .swiper-pagination-bullet {
   width: 72px;
   height: 4px;
-  background: rgba(23, 23, 23, 0.8);
+  background-color: rgba(23, 23, 23, 0.8);
   border-radius: 0;
+
+  @include tablet {
+    width: 100px;
+  }
 }

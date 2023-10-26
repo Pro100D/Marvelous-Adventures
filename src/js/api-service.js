@@ -12,3 +12,10 @@ export const getComics = async () => {
   const { data } = await axios.get(`/comics?ts=1&apikey=${API_KEY}`);
   return data;
 };
+
+export const getLastWeekComics = async () => {
+  const { data } = await axios.get(
+    `/comics?ts=1&apikey=${API_KEY}&dateDescriptor=lastWeek&limit=6`
+  );
+  return data;
+};
