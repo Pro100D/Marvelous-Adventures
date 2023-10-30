@@ -9,10 +9,11 @@ async function createCardMarkup() {
 
   return data.results
     .map(comics => {
-      console.log(comics);
       return `
-    <li class="my-swiper-slide swiper-slide">
-    <img src="${comics.thumbnail.path}.${comics.thumbnail.extension}"/>
+    <li class="my-swiper-slide swiper-slide" id=${comics.id}>
+    <img class="comics-img" src="${comics.thumbnail.path}.${comics.thumbnail.extension}"/>
+    <p class="comics-title">${comics.title}</p>
+    <p class="comics-text">${comics.creators.items[0].name}</p>
     </li>
       `;
     })
@@ -29,9 +30,11 @@ new Swiper('.last-comics-swiper', {
   breakpoints: {
     1399.8: {
       slidesPerView: 3,
+      slidesPerGroup: 3,
     },
     767.98: {
       slidesPerView: 2,
+      slidesPerGroup: 2,
     },
     374.98: {
       slidesPerView: 1,

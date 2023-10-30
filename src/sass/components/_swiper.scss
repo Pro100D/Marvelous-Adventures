@@ -14,7 +14,7 @@
   }
 }
 
-.swiper-wrapper .swiper-slide {
+.my-slide {
   @include tablet {
     display: flex;
     column-gap: 32px;

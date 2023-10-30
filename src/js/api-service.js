@@ -19,3 +19,8 @@ export const getLastWeekComics = async () => {
   );
   return data;
 };
+
+export const getComicsById = async id => {
+  const { data } = await axios.get(`/comics/${id}?ts=1&apikey=${API_KEY}`);
+  return data;
+};
