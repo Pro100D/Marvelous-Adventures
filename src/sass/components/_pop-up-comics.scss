@@ -1,0 +1,42 @@
+.pop-up-comics__backdrop {
+  z-index: 100;
+
+  position: fixed;
+  top: 0;
+  left: 0;
+
+  width: 100%;
+  height: 100%;
+
+  background-color: rgba($color: #000000, $alpha: 0.6);
+
+  opacity: 1;
+
+  visibility: inherit;
+  padding: 20px;
+}
+
+.pop-up-comics__backdrop.is-hidden {
+  opacity: 0;
+  visibility: hidden;
+
+  pointer-events: none;
+
+  & .pop-up-comics__modal {
+    opacity: 0;
+    visibility: hidden;
+    transform-origin: center;
+    transform: translate(-50%, -50%) scale(0.3);
+  }
+}
+
+.pop-up-comics__modal {
+  position: relative;
+  top: 50%;
+  left: 50%;
+
+  padding: 40px 20px 64px;
+
+  transform: translate(-50%, -50%) scale(1);
+  background-color: $body-bg-color;
+}

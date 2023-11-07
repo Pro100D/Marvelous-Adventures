@@ -1,6 +1,7 @@
 import Swiper from 'swiper';
 
 import { getLastWeekComics } from './api-service';
+import { format } from 'date-fns/esm';
 
 const listComics = document.querySelector('.last-comics-wrapper');
 
@@ -11,7 +12,9 @@ async function createCardMarkup() {
     .map(comics => {
       return `
     <li class="my-swiper-slide swiper-slide" id=${comics.id}>
+   <a href="#" class="comics-link" data-id=${comics.id}>
     <img class="comics-img" src="${comics.thumbnail.path}.${comics.thumbnail.extension}"/>
+    </a>
     <p class="comics-title">${comics.title}</p>
     <p class="comics-text">${comics.creators.items[0].name}</p>
     </li>
