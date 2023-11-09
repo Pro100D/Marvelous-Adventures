@@ -14,6 +14,8 @@
 
   visibility: inherit;
   padding: 20px;
+
+  overflow-y: scroll;
 }
 
 .pop-up-comics__backdrop.is-hidden {
@@ -39,4 +41,96 @@
 
   transform: translate(-50%, -50%) scale(1);
   background-color: $body-bg-color;
+}
+.btn-close-modal {
+  background-color: transparent;
+  border: none;
+  padding: 0;
+  position: absolute;
+  width: 20px;
+  height: 20px;
+  top: 14px;
+  right: 14px;
+
+  @include tablet {
+    width: 23px;
+    height: 23px;
+
+    top: 16px;
+    right: 16px;
+  }
+}
+
+.close-modal-icon {
+  width: 20px;
+  height: 20px;
+
+  @include tablet {
+    width: 23px;
+    height: 23px;
+  }
+}
+
+.comics__img-characters {
+  border-radius: 8px;
+}
+
+.comics__container {
+  padding: 32px 16px;
+}
+
+.comics__title {
+  font-size: 18px;
+  line-height: calc(24 / 18);
+  letter-spacing: -0.36px;
+
+  margin-bottom: 4px;
+}
+.comics__create {
+  color: rgba(250, 250, 250, 0.5);
+
+  font-size: 14px;
+  line-height: calc(18 / 14);
+}
+
+.comics__description {
+  font-size: 14px;
+  line-height: calc(18 / 14);
+
+  margin-bottom: 16px;
+}
+
+.comics__info-list {
+  display: flex;
+  column-gap: 24px;
+}
+
+.comics__info-title {
+  color: rgba(250, 250, 250, 0.5);
+
+  font-size: 10px;
+  line-height: calc(12 / 10);
+  text-transform: uppercase;
+}
+
+.comics__info-text {
+  font-size: 14px;
+  line-height: calc(18 / 14);
+}
+
+.comics__authors-list {
+  display: flex;
+}
+
+// .comics__characters-list {
+// }
+
+.characters-list__img {
+  width: 50px;
+  height: 50px;
+
+  border-radius: 8px;
+
+  object-fit: cover;
+  object-position: center;
 }

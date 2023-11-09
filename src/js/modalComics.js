@@ -1,5 +1,5 @@
 import { format } from 'date-fns/esm';
-import { getComicsById, getImgAuthors } from './api-service';
+import { getCharacters, getComicsById, getInfoAuthors } from './api-service';
 
 const listComics = document.querySelector('.last-comics-wrapper');
 const modal = document.querySelector('.pop-up-comics__backdrop');
@@ -41,18 +41,53 @@ async function onClickComics(evt) {
       return;
     }
     const id = evt.target.closest('.comics-link').dataset.id;
-    const {
-      data: { results },
-    } = await getComicsById(id);
+    const { results } = await getComicsById(id);
+    console.log(results);
     openModal();
     modalMarkup.insertAdjacentHTML('beforeend', createModalMarkup(results[0]));
+
+    const creatorList = document.querySelector('.comics__authors-list');
+    const characterList = document.querySelector('.comics__characters-list');
+
+    const { results: characters } = await getCharacters(id);
+    creatorList.insertAdjacentHTML(
+      'beforeend',
+      creatorsMarkup(results[0].creators.items)
+    );
+
+    characterList.insertAdjacentHTML('beforeend', charactersMarkup(characters));
   } catch (error) {
     console.error(error);
   }
 }
 
+function creatorsMarkup(creators) {
+  return creators
+    .map(
+      ({ name, role }) =>
+        `<li>
+    <p>${name}</p>
+    <p>${role}</p>
+  </li>`
+    )
+    .join('');
+}
+
+function charactersMarkup(characters) {
+  return characters
+    .map(
+      ({ thumbnail, name }) =>
+        `
+    <li>
+      <img class="characters-list__img" src=${thumbnail.path}.${thumbnail.extension} />
+      <p>${name}</p>
+    <li/>
+    `
+    )
+    .join('');
+}
+
 function createModalMarkup(results) {
-  console.log(results);
   const {
     thumbnail,
     title,
@@ -67,36 +102,37 @@ function createModalMarkup(results) {
 
   const date = format(new Date(dates[0].date), 'MMMM dd, yyyy');
   const yearReleased = new Date(dates[0].date).getFullYear();
-  function creatorsMarkup(creators) {}
+
   return `
+  <div class="comics">
+  <img class="comics__img-characters" src=${thumbnail.path}.${thumbnail.extension} />
+  <div class="comics__container">
+   <h3 class="comics__title">${title}</h3>
   <div>
-  <img src=${thumbnail.path}.${thumbnail.extension} />
-  <div>
-  <h3>${title}</h3>
-  <p>${creators[0].name}</p>
-  <p>${date}</p>
-  <p>${description}</p>
-  <ul> 
+      <p class="comics__create">${creators[0].name}</p>
+      <p class="comics__create">${date}</p>
+  <div />
+  <p class="comics__description">${description}</p>
+  <ul class="comics__info-list"> 
   <li>
-  <p>Format</p>
-  <p>${formatComics}</p> 
+  <p class="comics__info-title">Format</p>
+  <p class="comics__info-text">${formatComics}</p> 
   </li>
   <li>
-  <p>Year released</p>
-  <p>${yearReleased}</p>
+  <p class="comics__info-title">Year released</p>
+  <p class="comics__info-text">${yearReleased}</p>
   </li>
   <li>
-  <p>Pages</p>
-  <p>${pageCount}</p>
+  <p class="comics__info-title">Pages</p>
+  <p class="comics__info-text">${pageCount}</p>
   </li>
   <li>
-  <p>Price</p>
-  <p>${prices[0].price}</p>
+  <p class="comics__info-title">Price</p>
+  <p class="comics__info-text">${prices[0].price}</p>
   </li>
   </ul>
-  <ul>
-  ${getImgAuthors(id)}
-  </ul>
+  <ul class="comics__authors-list"></ul>
+  <ul class="comics__characters-list"></ul>
   </div>
   </div>
   

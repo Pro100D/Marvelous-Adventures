@@ -21,13 +21,16 @@ export const getLastWeekComics = async () => {
 };
 
 export const getComicsById = async id => {
-  const { data } = await axios.get(`/comics/${id}?ts=1&apikey=${API_KEY}`);
-  return data;
-};
-export const getImgAuthors = async comicsId => {
   const {
     data: { data },
-  } = await axios.get(`/comics/${comicsId}/creators?ts=1&apikey=${API_KEY}`);
-  console.log(data);
+  } = await axios.get(`/comics/${id}?ts=1&apikey=${API_KEY}`);
+  return data;
+};
+
+export const getCharacters = async comicId => {
+  const {
+    data: { data },
+  } = await axios.get(`/comics/${comicId}/characters?ts=1&apikey=${API_KEY}`);
+
   return data;
 };
