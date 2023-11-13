@@ -34,3 +34,11 @@ export const getCharacters = async comicId => {
 
   return data;
 };
+
+export const getAuthors = async comicsId => {
+  const {
+    data: { data },
+  } = await axios.get(`/comics/${comicsId}/creators?ts=1&apikey=${API_KEY}`);
+
+  return data;
+};

@@ -102,7 +102,10 @@
 
 .comics__info-list {
   display: flex;
+  flex-wrap: wrap;
   column-gap: 24px;
+
+  margin-bottom: 32px;
 }
 
 .comics__info-title {
@@ -120,12 +123,17 @@
 
 .comics__authors-list {
   display: flex;
+
+  margin-top: 20px;
 }
 
 // .comics__characters-list {
 // }
 
-.characters-list__img {
+.comics__info-text--format {
+  width: 55px;
+}
+.comics-list__img {
   width: 50px;
   height: 50px;
 

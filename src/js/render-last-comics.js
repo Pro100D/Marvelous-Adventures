@@ -1,7 +1,7 @@
 import Swiper from 'swiper';
 
 import { getLastWeekComics } from './api-service';
-import { format } from 'date-fns/esm';
+import { hideSpinner, showSpinner } from './spinner';
 
 const listComics = document.querySelector('.last-comics-wrapper');
 
@@ -24,7 +24,9 @@ async function createCardMarkup() {
 }
 
 async function createMarkup() {
+  showSpinner();
   const data = await createCardMarkup();
+  hideSpinner();
   listComics.insertAdjacentHTML('beforeend', data);
 }
 createMarkup();

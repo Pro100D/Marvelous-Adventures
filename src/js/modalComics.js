@@ -1,5 +1,6 @@
 import { format } from 'date-fns/esm';
-import { getCharacters, getComicsById, getInfoAuthors } from './api-service';
+import { getAuthors, getCharacters, getComicsById } from './api-service';
+import { hideSpinner, showSpinner } from './spinner';
 
 const listComics = document.querySelector('.last-comics-wrapper');
 const modal = document.querySelector('.pop-up-comics__backdrop');
@@ -40,20 +41,25 @@ async function onClickComics(evt) {
     if (!evt.target.closest('.comics-link')) {
       return;
     }
+    showSpinner();
     const id = evt.target.closest('.comics-link').dataset.id;
-    const { results } = await getComicsById(id);
-    console.log(results);
+    const results = await Promise.all([
+      getComicsById(id),
+      getCharacters(id),
+      getAuthors(id),
+    ]);
+    hideSpinner();
+    const comics = results[0].results[0];
+    const characters = results[1].results;
+    const creators = results[2].results;
+
     openModal();
-    modalMarkup.insertAdjacentHTML('beforeend', createModalMarkup(results[0]));
+    modalMarkup.insertAdjacentHTML('beforeend', createModalMarkup(comics));
 
     const creatorList = document.querySelector('.comics__authors-list');
     const characterList = document.querySelector('.comics__characters-list');
 
-    const { results: characters } = await getCharacters(id);
-    creatorList.insertAdjacentHTML(
-      'beforeend',
-      creatorsMarkup(results[0].creators.items)
-    );
+    creatorList.insertAdjacentHTML('beforeend', creatorsMarkup(creators));
 
     characterList.insertAdjacentHTML('beforeend', charactersMarkup(characters));
   } catch (error) {
@@ -64,10 +70,10 @@ async function onClickComics(evt) {
 function creatorsMarkup(creators) {
   return creators
     .map(
-      ({ name, role }) =>
-        `<li>
-    <p>${name}</p>
-    <p>${role}</p>
+      ({ fullName, thumbnail }) =>
+        `<li class="comics__authors-item">
+        <img class="comics-list__img " src="${thumbnail.path}.${thumbnail.extension}" />
+        <p>${fullName}</p>
   </li>`
     )
     .join('');
@@ -79,7 +85,7 @@ function charactersMarkup(characters) {
       ({ thumbnail, name }) =>
         `
     <li>
-      <img class="characters-list__img" src=${thumbnail.path}.${thumbnail.extension} />
+      <img class="comics-list__img " src=${thumbnail.path}.${thumbnail.extension} />
       <p>${name}</p>
     <li/>
     `
@@ -116,7 +122,7 @@ function createModalMarkup(results) {
   <ul class="comics__info-list"> 
   <li>
   <p class="comics__info-title">Format</p>
-  <p class="comics__info-text">${formatComics}</p> 
+  <p class="comics__info-text comics__info-text--format">${formatComics}</p> 
   </li>
   <li>
   <p class="comics__info-title">Year released</p>
@@ -131,10 +137,11 @@ function createModalMarkup(results) {
   <p class="comics__info-text">${prices[0].price}</p>
   </li>
   </ul>
+  <h3 class="comics__title">Creators</h3>
   <ul class="comics__authors-list"></ul>
+  <h3 class="comics__title">Characters</h3>
   <ul class="comics__characters-list"></ul>
   </div>
   </div>
-  
   `;
 }
