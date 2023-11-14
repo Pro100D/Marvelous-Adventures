@@ -5,6 +5,7 @@ import { hideSpinner, showSpinner } from './spinner';
 const listComics = document.querySelector('.last-comics-wrapper');
 const modal = document.querySelector('.pop-up-comics__backdrop');
 const modalMarkup = document.querySelector('.pop-up-comics__modal');
+const closeModalBtn = document.querySelector('.btn-close-modal');
 
 listComics.addEventListener('click', onClickComics);
 
@@ -25,6 +26,7 @@ function openModal() {
   document.body.style.overflow = 'hidden';
   modal.addEventListener('click', clickOnBackdrop);
   window.addEventListener('keydown', onEscapeKeyDown);
+  closeModalBtn.addEventListener('click', closeModal);
 }
 
 function closeModal() {
@@ -32,6 +34,7 @@ function closeModal() {
   document.body.style.overflow = '';
   modal.removeEventListener('click', clickOnBackdrop);
   window.removeEventListener('keydown', onEscapeKeyDown);
+  closeModalBtn.removeEventListener('click', closeModal);
   modalMarkup.innerHTML = '';
 }
 
@@ -71,7 +74,7 @@ function creatorsMarkup(creators) {
   return creators
     .map(
       ({ fullName, thumbnail }) =>
-        `<li class="comics__authors-item">
+        `<li class="comics__item">
         <img class="comics-list__img " src="${thumbnail.path}.${thumbnail.extension}" />
         <p>${fullName}</p>
   </li>`
@@ -84,10 +87,10 @@ function charactersMarkup(characters) {
     .map(
       ({ thumbnail, name }) =>
         `
-    <li>
+    <li class="comics__item">
       <img class="comics-list__img " src=${thumbnail.path}.${thumbnail.extension} />
       <p>${name}</p>
-    <li/>
+    </li>
     `
     )
     .join('');
@@ -111,13 +114,13 @@ function createModalMarkup(results) {
 
   return `
   <div class="comics">
-  <img class="comics__img-characters" src=${thumbnail.path}.${thumbnail.extension} />
+  <img class="comics__img" src=${thumbnail.path}.${thumbnail.extension} />
   <div class="comics__container">
-   <h3 class="comics__title">${title}</h3>
-  <div>
-      <p class="comics__create">${creators[0].name}</p>
-      <p class="comics__create">${date}</p>
-  <div />
+   <h3 class="comics__title comics__title--not-margin">${title}</h3>
+     <div class="comics__text-wrapper">
+         <p class="comics__created comics__created--border">${creators[0].name}</p>
+         <p class="comics__created">${date}</p>
+      </div>
   <p class="comics__description">${description}</p>
   <ul class="comics__info-list"> 
   <li>
