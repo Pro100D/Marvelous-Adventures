@@ -1,9 +1,9 @@
 import Swiper from 'swiper';
 
+import { refs } from './utils/refs';
+
 import { getLastWeekComics } from './api-service';
 import { hideSpinner, showSpinner } from './spinner';
-
-const listComics = document.querySelector('.last-comics-wrapper');
 
 async function createCardMarkup() {
   const { data } = await getLastWeekComics();
@@ -27,7 +27,7 @@ async function createMarkup() {
   showSpinner();
   const data = await createCardMarkup();
   hideSpinner();
-  listComics.insertAdjacentHTML('beforeend', data);
+  refs.listComics.insertAdjacentHTML('beforeend', data);
 }
 createMarkup();
 

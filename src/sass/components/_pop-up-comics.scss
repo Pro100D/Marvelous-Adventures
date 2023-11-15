@@ -54,6 +54,12 @@
     left: 50%;
 
     transform: translate(-50%, 0);
+
+    padding: 64px 32px;
+  }
+
+  @include desktop {
+    width: 1000px;
   }
 }
 
@@ -81,6 +87,12 @@
   }
 }
 
+.comics {
+  @include desktop {
+    display: flex;
+  }
+}
+
 .comics__container {
   padding: 32px 16px;
   background-color: #171717;
@@ -101,6 +113,12 @@
 
   @include tablet {
     width: 332px;
+  }
+
+  @include desktop {
+    margin-right: 16px;
+    width: 380px;
+    height: 580px;
   }
 }
 
@@ -202,6 +220,11 @@
     column-gap: 32px;
     row-gap: 16px;
   }
+
+  @include desktop {
+    grid-template-columns: repeat(3, 1fr);
+    column-gap: 15px;
+  }
 }
 
 .comics__item {
@@ -224,15 +247,15 @@
   width: 50px;
   height: 50px;
 
-  @include tablet {
-    width: 60px;
-    height: 60px;
-  }
-
   border-radius: 8px;
 
   object-fit: cover;
   object-position: center;
+
+  @include tablet {
+    width: 60px;
+    height: 60px;
+  }
 }
 .comics__characters-list {
   margin-top: 20px;
@@ -242,5 +265,20 @@
     grid-template-columns: repeat(2, 1fr);
     column-gap: 32px;
     row-gap: 16px;
+  }
+
+  @include desktop {
+    grid-template-columns: repeat(3, 1fr);
+    column-gap: 15px;
+  }
+}
+
+.comics__item-name {
+  font-size: 14px;
+  line-height: calc(18 / 14);
+
+  @include tablet {
+    font-size: 16px;
+    line-height: calc(18 / 16);
   }
 }

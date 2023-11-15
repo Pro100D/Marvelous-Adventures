@@ -1,13 +1,9 @@
 import { format } from 'date-fns/esm';
 import { getAuthors, getCharacters, getComicsById } from './api-service';
 import { hideSpinner, showSpinner } from './spinner';
+import { refs } from './utils/refs';
 
-const listComics = document.querySelector('.last-comics-wrapper');
-const modal = document.querySelector('.pop-up-comics__backdrop');
-const modalMarkup = document.querySelector('.pop-up-comics__modal');
-const closeModalBtn = document.querySelector('.btn-close-modal');
-
-listComics.addEventListener('click', onClickComics);
+refs.listComics.addEventListener('click', onClickComics);
 
 function clickOnBackdrop(evt) {
   if (evt.target === evt.currentTarget) {
@@ -22,20 +18,19 @@ function onEscapeKeyDown(evt) {
 }
 
 function openModal() {
-  modal.classList.remove('is-hidden');
+  refs.modal.classList.remove('is-hidden');
   document.body.style.overflow = 'hidden';
-  modal.addEventListener('click', clickOnBackdrop);
+  refs.modal.addEventListener('click', clickOnBackdrop);
   window.addEventListener('keydown', onEscapeKeyDown);
-  closeModalBtn.addEventListener('click', closeModal);
+  refs.closeModalBtn.addEventListener('click', closeModal);
 }
 
 function closeModal() {
-  modal.classList.add('is-hidden');
+  refs.modal.classList.add('is-hidden');
   document.body.style.overflow = '';
-  modal.removeEventListener('click', clickOnBackdrop);
+  refs.modal.removeEventListener('click', clickOnBackdrop);
   window.removeEventListener('keydown', onEscapeKeyDown);
-  closeModalBtn.removeEventListener('click', closeModal);
-  modalMarkup.innerHTML = '';
+  refs.closeModalBtn.removeEventListener('click', closeModal);
 }
 
 async function onClickComics(evt) {
@@ -57,9 +52,10 @@ async function onClickComics(evt) {
     const creators = results[2].results;
 
     openModal();
-    modalMarkup.insertAdjacentHTML('beforeend', createModalMarkup(comics));
+    refs.modalMarkup.innerHTML = createModalMarkup(comics);
 
     const creatorList = document.querySelector('.comics__authors-list');
+
     const characterList = document.querySelector('.comics__characters-list');
 
     creatorList.insertAdjacentHTML('beforeend', creatorsMarkup(creators));
@@ -76,7 +72,7 @@ function creatorsMarkup(creators) {
       ({ fullName, thumbnail }) =>
         `<li class="comics__item">
         <img class="comics-list__img " src="${thumbnail.path}.${thumbnail.extension}" />
-        <p>${fullName}</p>
+        <p class="comics__item-name">${fullName}</p>
   </li>`
     )
     .join('');
@@ -89,29 +85,29 @@ function charactersMarkup(characters) {
         `
     <li class="comics__item">
       <img class="comics-list__img " src=${thumbnail.path}.${thumbnail.extension} />
-      <p>${name}</p>
+      <p class="comics__item-name">${name}</p>
     </li>
     `
     )
     .join('');
 }
 
-function createModalMarkup(results) {
-  const {
-    thumbnail,
-    title,
-    creators: { items: creators },
-    dates,
-    description,
-    format: formatComics,
-    pageCount,
-    id,
-    prices,
-  } = results;
+function createModalMarkup({
+  thumbnail,
+  title,
+  creators: { items: creators },
+  dates,
+  description,
+  format: formatComics,
+  pageCount,
+  prices,
+}) {
+  if (!description) {
+    description = 'Sorry the author of this comic did not add a description.';
+  }
 
   const date = format(new Date(dates[0].date), 'MMMM dd, yyyy');
   const yearReleased = new Date(dates[0].date).getFullYear();
-
   return `
   <div class="comics">
   <img class="comics__img" src=${thumbnail.path}.${thumbnail.extension} />
