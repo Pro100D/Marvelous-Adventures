@@ -8,7 +8,7 @@ const API_KEY = 'a5837db97d72016c81a7a776f4240db9';
 
 axios.defaults.baseURL = `https://gateway.marvel.com/v1/public`;
 
-export const getComics = async () => {
+export const getAllComics = async () => {
   const { data } = await axios.get(`/comics?ts=1&apikey=${API_KEY}`);
   return data;
 };

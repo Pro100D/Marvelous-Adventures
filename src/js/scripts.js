@@ -1,4 +1,4 @@
-import { getComics, getLastWeekComics, getComicsById } from './api-service';
+import { getAllComics, getLastWeekComics, getComicsById } from './api-service';
 // utils
 import './utils/refs';
 // components
