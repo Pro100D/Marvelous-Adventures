@@ -5,4 +5,4 @@ import './utils/refs';
 import './spinner';
 import './sliders';
 import './render-last-comics';
-import './modalComics';
+import './modal-comics';
