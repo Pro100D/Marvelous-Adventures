@@ -9,4 +9,6 @@ const refs = {
   formatSelect: document.querySelector('.search-form__format'),
   queryInput: document.querySelector('.search-form__text'),
   form: document.querySelector('.search-form'),
+  selectOrderBy: document.querySelector('.search-form__order-by'),
+  sortedComicsList: document.querySelector('.sorted-comics__list'),
 };

@@ -1,4 +1,4 @@
 // utils
 import './utils/refs';
 // components
-import './search-form';
+import './sorted-comics';
